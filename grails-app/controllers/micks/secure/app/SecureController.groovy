@@ -6,7 +6,11 @@ class SecureController {
 
     @Secured('ROLE_ADMIN')
     def index() {
-        render 'Secure access only - only MICK with ROLE_ADMIN can view this page'
+        if (isLoggedIn()) {
+            render 'Secure access only - only MICK with ROLE_ADMIN can view this page'
+        } else {
+            render 'Secure access only - user is not logged in'
+        }
     }
 
     def doSomething() {
