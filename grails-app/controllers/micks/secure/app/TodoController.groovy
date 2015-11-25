@@ -16,7 +16,7 @@ class TodoController {
         String username = principal.username
         User currentUser = User.findByUsername(username)
 
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(max ?: 5, 100)
         params['user'] = currentUser
         params['fetch'] = [users: '"eager"']
 
