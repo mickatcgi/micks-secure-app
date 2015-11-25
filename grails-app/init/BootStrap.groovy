@@ -27,9 +27,20 @@ class BootStrap {
         // Initialize test Todo stuff
 
         Todo todo1 = new Todo(user: adminUser, description: "Write some grails code", priority: "High",
-                folder: "Coding", status: "In-progress", notes: "100 lines per day")
+                folder: "Grails Coding", status: "In-progress", notes: "100 lines per day")
+        Todo todo2 = new Todo(user: adminUser, description: "Write some groovy code", priority: "Medium",
+                folder: "Groovy Coding", status: "In-progress", notes: "200 lines per day")
 
         todo1.save(failOnError: true)
+        todo2.save(failOnError: true)
+
+        Todo todo101 = new Todo(user: standardUser, description: "Write some ruby code", priority: "High",
+                folder: "Ruby Coding", status: "In-progress", notes: "No bugs today")
+        Todo todo102 = new Todo(user: standardUser, description: "Write some rails code", priority: "Low",
+                folder: "Rails Coding", status: "In-progress", notes: "One bug allowed per day")
+
+        todo101.save(failOnError: true)
+        todo102.save(failOnError: true)
     }
 
 
