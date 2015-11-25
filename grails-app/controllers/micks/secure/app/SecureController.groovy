@@ -2,10 +2,14 @@ package micks.secure.app
 
 import grails.plugin.springsecurity.annotation.Secured
 
-@Secured('ROLE_ADMIN')
 class SecureController {
 
+    @Secured('ROLE_ADMIN')
     def index() {
-        render 'Secure access only'
+        render 'Secure access only - only MICK with ROLE_ADMIN can view this page'
+    }
+
+    def doSomething() {
+        render 'InSecure access only - anybody on the planet can do something'
     }
 }
