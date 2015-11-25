@@ -21,6 +21,7 @@
             <g:set var="user" value="${sec.username()}" />
             <g:if test="${user}">
                 Signed in as: ${user}
+                <g:link controller="logout">(logout)</g:link>
             </g:if>
             <g:else>
                 User: anonymous
