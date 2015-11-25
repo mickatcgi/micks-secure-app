@@ -1,3 +1,4 @@
+import groovy.time.TimeCategory
 import micks.secure.app.Role
 import micks.secure.app.Todo
 import micks.secure.app.User
@@ -26,18 +27,28 @@ class BootStrap {
         //////////////////////////////////////////////////////////
         // Initialize test Todo stuff
 
+        Date dueDate
+        Date completedDate
+        Date today = new Date()
+        use(TimeCategory) {
+            dueDate = today + 1.week - 4.days + 2.hours - 3.seconds
+            completedDate = today - 1.week
+        }
+
         Todo todo1 = new Todo(user: adminUser, description: "Write some grails code", priority: "High",
-                folder: "Grails Coding", status: "In-progress", notes: "100 lines per day")
+                folder: "Grails Coding", status: "In-progress", notes: "100 lines per day", dueDate: dueDate)
         Todo todo2 = new Todo(user: adminUser, description: "Write some groovy code", priority: "Medium",
-                folder: "Groovy Coding", status: "In-progress", notes: "200 lines per day")
+                folder: "Groovy Coding", status: "In-progress", notes: "200 lines per day", dueDate: dueDate,
+                completedDate: completedDate)
 
         todo1.save(failOnError: true)
         todo2.save(failOnError: true)
 
         Todo todo101 = new Todo(user: standardUser, description: "Write some ruby code", priority: "High",
-                folder: "Ruby Coding", status: "In-progress", notes: "No bugs today")
+                folder: "Ruby Coding", status: "In-progress", notes: "No bugs today", dueDate: dueDate)
         Todo todo102 = new Todo(user: standardUser, description: "Write some rails code", priority: "Low",
-                folder: "Rails Coding", status: "In-progress", notes: "One bug allowed per day")
+                folder: "Rails Coding", status: "In-progress", notes: "One bug allowed per day", dueDate: dueDate,
+                completedDate: completedDate)
 
         todo101.save(failOnError: true)
         todo102.save(failOnError: true)

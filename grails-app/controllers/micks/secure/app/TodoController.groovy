@@ -14,17 +14,22 @@ class TodoController {
     def index(Integer max) {
 
         String username = principal.username
+        User currentUser = User.findByUsername(username)
+
         params.max = Math.min(max ?: 10, 100)
-        //params['user_id'] = username
-        //params['fetch'] = [users: '"eager"']
+        params['user'] = currentUser
+        params['fetch'] = [users: '"eager"']
 
         log.info("username = ${username} : params = ${params}")
-        def results = Todo.list(params)
-        displayResults(results)
 
-        flash.message = "Todo lookup successful. Found ${results.size()} todos."
+        //def todoList = Todo.list(params)
+        def todoList = Todo.findAllByUser(currentUser, params)
 
-        respond results, model:[todoCount: Todo.count()]
+        displayResults(todoList)
+
+        flash.message = "Todo lookup successful. Found ${todoList.size()} todos."
+
+        respond todoList, model:[todoCount: Todo.count()]
     }
 
     def show(Todo todo) {
@@ -121,7 +126,7 @@ class TodoController {
 
     protected displayResults(todos) {
         todos.each {
-            todo -> printf("TODO = %s\n", todo.toString())
+            todo -> log.info("TODO retrieved: ${todo.id}, ${todo.user}, ${todo.description}")
         }
     }
 }

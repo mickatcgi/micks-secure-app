@@ -12,6 +12,7 @@
             <g:message code="default.link.skip.label" default="Skip to content&hellip;"/>
         </a>
 
+        <!-- Navigation section -->
         <div class="nav" role="navigation">
             <ul>
                 <li><a class="home" href="${createLink(uri: '/')}">
@@ -24,6 +25,8 @@
                 </li>
             </ul>
         </div>
+
+        <!-- Todo List display -->
         <div id="list-todo" class="content scaffold-list" role="main">
             <h1>
                 <g:message code="default.list.label" args="[entityName]"/>
@@ -31,7 +34,11 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${todoList}"/>
+
+            <!-- Display a paginated table -->
+            <f:table collection="${todoList}"
+                     properties="['id', 'description', 'user', 'priority', 'folder', 'status',
+                     'notes', 'dueDate', 'completedDate']" domainClass="micks.secure.app.Todo"/>
 
             <div class="pagination">
                 <g:paginate total="${todoCount ?: 0}"/>

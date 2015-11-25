@@ -5,7 +5,7 @@ import grails.util.Environment
 appender('STDOUT', ConsoleAppender) {
     encoder(PatternLayoutEncoder) {
         //pattern = "%level %logger - %msg%n"
-        pattern = "%level %logger{0} - %msg%n"
+        pattern = "MICK ----> %level %logger{0} - %msg%n"
     }
 }
 
