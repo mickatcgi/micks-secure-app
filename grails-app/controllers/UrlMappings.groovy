@@ -1,6 +1,9 @@
 class UrlMappings {
 
     static mappings = {
+
+        "/api/todos" (resources: "todoRest")
+
         "/$controller/$action?/$id?(.$format)?"{
             constraints {
                 // apply constraints here
