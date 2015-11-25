@@ -1,8 +1,11 @@
 package micks.secure.app
 
+import groovy.transform.ToString
+
 /**
  * Created by mick on 11/25/2015.
  */
+@ToString(includeNames=true, includePackage=false)
 class Todo {
 
     String description
@@ -17,13 +20,11 @@ class Todo {
     Date    dateCreated
     Date    lastUpdated
 
+    static belongsTo = [ user: User ]
+
     static constraints = {
         dueDate(blank: true, nullable: true)
         completedDate(blank: true, nullable: true)
     }
 
-    @Override
-    String toString() {
-        return super.toString()
-    }
 }

@@ -37,5 +37,11 @@
                 <g:paginate total="${todoCount ?: 0}"/>
             </div>
         </div>
+
+        <g:hasErrors>
+            <div class="errors">
+                <g:renderErrors bean="${todo}" as="list" />
+            </div>
+        </g:hasErrors>
     </body>
 </html>

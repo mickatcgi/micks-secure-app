@@ -18,6 +18,8 @@ class User implements Serializable {
 	boolean accountLocked
 	boolean passwordExpired
 
+	static hasMany = [todos: Todo]
+
 	User() {}
 
 	User(String username, String password) {

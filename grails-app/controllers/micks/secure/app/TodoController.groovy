@@ -12,8 +12,19 @@ class TodoController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
+
+        String username = principal.username
         params.max = Math.min(max ?: 10, 100)
-        respond Todo.list(params), model:[todoCount: Todo.count()]
+        //params['user_id'] = username
+        //params['fetch'] = [users: '"eager"']
+
+        log.info("username = ${username} : params = ${params}")
+        def results = Todo.list(params)
+        displayResults(results)
+
+        flash.message = "Todo lookup successful. Found ${results.size()} todos."
+
+        respond results, model:[todoCount: Todo.count()]
     }
 
     def show(Todo todo) {
@@ -105,6 +116,12 @@ class TodoController {
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
+        }
+    }
+
+    protected displayResults(todos) {
+        todos.each {
+            todo -> printf("TODO = %s\n", todo.toString())
         }
     }
 }
