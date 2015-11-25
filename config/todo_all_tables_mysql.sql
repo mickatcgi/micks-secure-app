@@ -234,10 +234,10 @@ CREATE TABLE todo (
     status varchar(20),
     due_date DATE,
     complete_date DATE,
-    created_at timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    updated_at timestamp,
+    date_created timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    date_updated timestamp,
     -- Put notes at the end because it can be long and messes up SQL view
-    notes VARCHAR(16000),
+    notes VARCHAR(16000)
     ) ENGINE=InnoDB;
 
 
