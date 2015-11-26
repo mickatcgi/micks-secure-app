@@ -1,15 +1,32 @@
+import grails.converters.JSON
+import grails.converters.XML
 import groovy.time.TimeCategory
 import micks.secure.app.Role
 import micks.secure.app.Todo
 import micks.secure.app.User
 import micks.secure.app.UserRole
 
+import java.text.SimpleDateFormat
+
 class BootStrap {
 
+    /**
+     * Initialize everything...
+     */
     def init = { servletContext ->
+        def (User adminUser, User standardUser) = initUsers()
+        initTodos(adminUser, standardUser)
+        initMarshallers()
+    }
 
-        //////////////////////////////////////////////////////////
-        // Initialize Spring Security stuff...
+
+    def destroy = {
+    }
+
+    /**
+     * Initialize Spring-security users and roles to get us started...
+     */
+    def initUsers() {
 
         Role adminRole = new Role('ROLE_ADMIN').save()
         Role userRole = new Role('ROLE_USER').save()
@@ -24,8 +41,13 @@ class BootStrap {
         assert Role.count() == 2
         assert UserRole.count() == 2
 
-        //////////////////////////////////////////////////////////
-        // Initialize test Todo stuff
+        return [adminUser, standardUser]
+    }
+
+    /**
+     * Initialize default todos to get us started...
+     */
+    def initTodos(User adminUser, User standardUser) {
 
         Date dueDate
         Date completedDate
@@ -73,9 +95,44 @@ class BootStrap {
 
         todo101.save(failOnError: true)
         todo102.save(failOnError: true)
+
+        return
     }
 
+    /**
+     * Initialize the marshalers responsible for parsing and returning JSON objects in REST calls
+     */
+    def initMarshallers() {
 
-    def destroy = {
+        def dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss")
+
+        JSON.registerObjectMarshaller(Todo) {
+            Todo t ->
+                return [id           : t.id,
+                        description  : t.description,
+                        notes        : t.notes,
+                        user         : t.user.username,
+                        priority     : t.priority,
+                        folder       : t.folder,
+                        status       : t.status,
+                        dueDate      : t.dueDate,
+                        completedDate: t.completedDate
+                ]
+        }
+
+        XML.registerObjectMarshaller(Todo) {
+            Todo t, converter ->
+                converter.attribute("id", t.id.toString())
+                converter.attribute("user", t.user.username)
+                converter.build {
+                    description t.description
+                    notes t.notes
+                    priority t.priority
+                    folder t.folder
+                    status t.status
+                    dueDate t.dueDate == null ? "" : dateFormatter.format(t.dueDate)
+                    completedDate t.completedDate == null ? "" : dateFormatter.format(t.completedDate)
+                }
+        }
     }
 }
