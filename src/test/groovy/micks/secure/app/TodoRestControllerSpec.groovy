@@ -1,10 +1,11 @@
 package micks.secure.app
-
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import groovy.time.TimeCategory
 import spock.lang.Specification
+
+import javax.servlet.http.HttpServletResponse
 
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
@@ -55,7 +56,29 @@ class TodoRestControllerSpec extends Specification {
         descriptions.size() == Todo.count()
     }
 
-    private initializeUserAndTodos() {
+    void "POST a single Todo as JSON"() {
+        given: "A set of Todos to update and a user Id"
+        int userId = initializeUserAndTodos()
+
+        when: "I invoke the save action with a JSON Todo request"
+        String json = '{ "description": "New todo from POST unit test", "notes": "Hello Kitty", "user": { "id": ' +
+                '"' + userId + '" } }'
+        request.json = json
+        request.contentType = JSON_CONTENT_TYPE
+        request.method = 'POST'         // Force a POST otherwise we get a 405 method not allowed response
+        println("About to POST JSON Todo = ${json}")
+        controller.save()
+        assert HttpServletResponse.SC_METHOD_NOT_ALLOWED != response.status
+
+        then: "I get a 201 JSON response with the id of the new POST"
+        response.status == 201
+        response.json.id != null
+        println("JSON POST Response errorMessage = ${response?.errorMessage}")
+        println("JSON POST Response = ${response?.json}")
+
+    }
+
+    private int initializeUserAndTodos() {
 
         //////////////////////////////////////////////////////////
         // Initialize Spring Security stuff...
@@ -124,5 +147,8 @@ class TodoRestControllerSpec extends Specification {
         todo102.save(failOnError: true)
 
         assert Todo.count() == 10
+
+        // Used for the individual Todo tests, which need an id (for POST)
+        return adminUser.getId()
     }
 }
