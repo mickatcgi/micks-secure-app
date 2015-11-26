@@ -13,20 +13,23 @@ class TodoController {
 
     def index(Integer max) {
 
-        String username = principal.username
-        User currentUser = User.findByUsername(username)
-
         params.max = Math.min(max ?: 5, 100)
-        params['user'] = currentUser
         params['fetch'] = [users: '"eager"']
 
-        log.info("username = ${username} : params = ${params}")
+        def todoList
+        def principal = getPrincipal()
+        if (principal != null) {
+            String username = principal?.username
+            User currentUser = User.findByUsername(username)
+            params['user'] = currentUser
+            log.info("username = ${username}")
+            todoList = Todo.findAllByUser(currentUser, params)
+        } else {
+            todoList = Todo.list(params)
+        }
 
-        //def todoList = Todo.list(params)
-        def todoList = Todo.findAllByUser(currentUser, params)
-
+        log.info("params = ${params}")
         displayResults(todoList)
-
         flash.message = "Todo lookup successful. Found ${todoList.size()} todos."
 
         respond todoList, model:[todoCount: Todo.count()]

@@ -65,9 +65,9 @@ class BootStrap {
         todo7.save(failOnError: true)
         todo8.save(failOnError: true)
 
-        Todo todo101 = new Todo(user: standardUser, description: "Write some ruby code", priority: "High",
+        Todo todo101 = new Todo(user: standardUser, description: "Write some ruby code 101", priority: "High",
                 folder: "Ruby Coding", status: "In-progress", notes: "No bugs today", dueDate: dueDate)
-        Todo todo102 = new Todo(user: standardUser, description: "Write some rails code", priority: "Low",
+        Todo todo102 = new Todo(user: standardUser, description: "Write some rails code 102", priority: "Low",
                 folder: "Rails Coding", status: "In-progress", notes: "One bug allowed per day", dueDate: dueDate,
                 completedDate: completedDate)
 

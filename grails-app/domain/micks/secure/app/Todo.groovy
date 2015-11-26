@@ -23,6 +23,10 @@ class Todo {
     static belongsTo = [ user: User ]
 
     static constraints = {
+        priority(blank: true, nullable: true)
+        folder(blank: true, nullable: true)
+        status(blank: true, nullable: true)
+        notes(blank: true, nullable: true)
         dueDate(blank: true, nullable: true)
         completedDate(blank: true, nullable: true)
     }
