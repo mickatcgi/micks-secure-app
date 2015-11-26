@@ -21,6 +21,8 @@ class TodoRestController extends RestfulController {
      * {description: "Billybob woz ere", notes:"Hello from the kittsville minus json extension", user: {id: 2}}
      *
      * Now i just need to find out why Spring-security needs to be switched off to allow REST actions.
+     * After a stop/start the TodoRestController POST/PUT actions seem to work just fine with Spring
+     * Security enabled and working for the UI pages.
      */
 
     TodoRestController() {

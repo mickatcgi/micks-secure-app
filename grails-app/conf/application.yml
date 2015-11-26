@@ -91,11 +91,14 @@ environments:
     development:
         grails.plugin.springsecurity.password.algorithm: 'bcrypt'
         grails.plugin.springsecurity.logout.postOnly: false
-        grails.plugin.springsecurity.active: false
+        grails.plugin.springsecurity.active: true
         dataSource:
             dbCreate: create-drop
             url: jdbc:mysql://localhost:3306/micks-secure-app
     test:
+        grails.plugin.springsecurity.password.algorithm: 'bcrypt'
+        grails.plugin.springsecurity.logout.postOnly: false
+        grails.plugin.springsecurity.active: true
         dataSource:
             dbCreate: update
             url: jdbc:mysql://localhost:3306/micks-secure-app
