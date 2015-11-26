@@ -3,6 +3,7 @@ package micks.secure.app
 import grails.test.mixin.*
 import spock.lang.*
 
+@Ignore
 @TestFor(RoleController)
 @Mock(Role)
 class RoleControllerSpec extends Specification {

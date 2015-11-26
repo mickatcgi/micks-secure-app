@@ -3,6 +3,7 @@ package micks.secure.app
 import grails.test.mixin.*
 import spock.lang.*
 
+@Ignore
 @TestFor(TodoController)
 @Mock(Todo)
 class TodoControllerSpec extends Specification {
