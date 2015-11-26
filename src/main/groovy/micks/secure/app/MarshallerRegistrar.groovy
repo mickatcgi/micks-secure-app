@@ -26,7 +26,9 @@ class MarshallerRegistrar {
                         folder       : t.folder,
                         status       : t.status,
                         dueDate      : t.dueDate,
-                        completedDate: t.completedDate
+                        completedDate: t.completedDate,
+                        dateCreated  : t.dateCreated,
+                        lastUpdated  : t.lastUpdated
                 ]
         }
 
@@ -42,6 +44,8 @@ class MarshallerRegistrar {
                     status t.status
                     dueDate t.dueDate == null ? "" : dateFormatter.format(t.dueDate)
                     completedDate t.completedDate == null ? "" : dateFormatter.format(t.completedDate)
+                    dateCreated t.dateCreated == null ? "" : dateFormatter.format(t.dateCreated)
+                    lastUpdated t.lastUpdated == null ? "" : dateFormatter.format(t.lastUpdated)
                 }
         }
 
