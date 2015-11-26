@@ -3,7 +3,7 @@ package micks.secure.app
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER', 'ROLE_ANONYMOUS'])
-class TodoRest2Controller {
+class TodeRestController {
 
     static responseFormats = ['json', 'xml']
 
