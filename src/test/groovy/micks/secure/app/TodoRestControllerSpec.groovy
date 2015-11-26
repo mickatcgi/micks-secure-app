@@ -4,6 +4,7 @@ import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import groovy.time.TimeCategory
 import spock.lang.Specification
+import spock.lang.Stepwise
 
 import javax.servlet.http.HttpServletResponse
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse
  */
 @TestFor(TodoRestController)
 @Mock([User, Todo, Role, UserRole])
+@Stepwise
 class TodoRestControllerSpec extends Specification {
 
     def setupSpec() {
@@ -56,21 +58,21 @@ class TodoRestControllerSpec extends Specification {
         descriptions.size() == Todo.count()
     }
 
-    void "POST a single Todo as JSON"() {
+    void "POST a single new odo as JSON"() {
         given: "A set of Todos to update and a user Id"
-        int userId = initializeUserAndTodos()
+        def (User testUser, Todo testTodo) = initializeUserAndTodos()
 
         when: "I invoke the save action with a JSON Todo request"
         String json = '{ "description": "New todo from POST unit test", "notes": "Hello Kitty", "user": { "id": ' +
-                '"' + userId + '" } }'
+                '"' + testUser.getId() + '" } }'
         request.json = json
         request.contentType = JSON_CONTENT_TYPE
         request.method = 'POST'         // Force a POST otherwise we get a 405 method not allowed response
         println("About to POST JSON Todo = ${json}")
         controller.save()
-        assert HttpServletResponse.SC_METHOD_NOT_ALLOWED != response.status
 
         then: "I get a 201 JSON response with the id of the new POST"
+        response.status != HttpServletResponse.SC_METHOD_NOT_ALLOWED
         response.status == 201
         response.json.id != null
         println("JSON POST Response errorMessage = ${response?.errorMessage}")
@@ -78,7 +80,30 @@ class TodoRestControllerSpec extends Specification {
 
     }
 
-    private int initializeUserAndTodos() {
+    void "PUT a single existing Todo as JSON"() {
+        given: "A set of Todos to update and a user Id"
+        def (User testUser, Todo testTodo) = initializeUserAndTodos()
+
+        when: "I invoke the update action with a JSON Todo request"
+        String json = '{ "id": ' + testTodo.getId() +
+                '", "description": "Updated todo from PUT unit test", "notes": "Hello Kitty" }'
+        request.json = json
+        request.contentType = JSON_CONTENT_TYPE
+        request.method = 'PUT'         // Force a PUT otherwise we get a 405 method not allowed response
+        params.id = testTodo.id
+        println("About to PUT JSON Todo = ${json}")
+        controller.update()
+
+        then: "I get a 201 JSON response with the id of the new PUT"
+        response.status != HttpServletResponse.SC_METHOD_NOT_ALLOWED
+        response.status == HttpServletResponse.SC_OK
+        response.json.id != null
+        println("JSON PUT Response errorMessage = ${response?.errorMessage}")
+        println("JSON PUT Response = ${response?.json}")
+
+    }
+
+    def private initializeUserAndTodos() {
 
         //////////////////////////////////////////////////////////
         // Initialize Spring Security stuff...
@@ -148,7 +173,7 @@ class TodoRestControllerSpec extends Specification {
 
         assert Todo.count() == 10
 
-        // Used for the individual Todo tests, which need an id (for POST)
-        return adminUser.getId()
+        // Used for the individual Todo tests, which need a user and a todo for POST/PUT tests
+        return [adminUser, todo1]
     }
 }
