@@ -71,12 +71,33 @@ class TodeRestControllerSpec extends Specification {
         controller.save()
 
         then: "I get a 201 JSON response with the id of the new POST"
+        println("JSON POST Response errorMessage = ${response?.errorMessage}")  // Returned from sendError()
+        println("JSON POST Response text = ${response?.text}")                  // Returned from render()
         response.status != HttpServletResponse.SC_METHOD_NOT_ALLOWED
         response.status == 201
         response.json.id != null
-        println("JSON POST Response errorMessage = ${response?.errorMessage}")
         println("JSON POST Response = ${response?.json}")
 
+    }
+
+    void "POST a single new bad todo as JSON which fails validation"() {
+        given: "A set of Todos to update and a user Id"
+        def (User testUser, Todo testTodo) = initializeUserAndTodos()
+
+        when: "I invoke the save action with a JSON Todo request"
+        String json = '{ "notes": "Theres no gubbins in this todo", "user": { "id": ' +
+                '"' + testUser.getId() + '" } }'
+        request.json = json
+        request.contentType = JSON_CONTENT_TYPE
+        request.method = 'POST'         // Force a POST otherwise we get a 405 method not allowed response
+        println("About to POST JSON Todo = ${json}")
+        controller.save()
+
+        then: "I get a 418 JSON response with an error message"
+        println("JSON POST Response errorMessage = ${response?.errorMessage}")  // Returned from sendError()
+        println("JSON POST Response text = ${response?.text}")                  // Returned from render()
+        response.status != HttpServletResponse.SC_METHOD_NOT_ALLOWED
+        response.status == 418
     }
 
 

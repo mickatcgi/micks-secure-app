@@ -23,6 +23,9 @@ class Todo {
     static belongsTo = [ user: User ]
 
     static constraints = {
+        // Blank can be an empty string, different to null.
+        // Web requests can send blank strings when data is not provided.
+        description(blank: false, nullable: false)
         priority(blank: true, nullable: true)
         folder(blank: true, nullable: true)
         status(blank: true, nullable: true)
