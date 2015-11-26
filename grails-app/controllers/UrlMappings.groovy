@@ -4,6 +4,7 @@ class UrlMappings {
 
         // Implements the get/put/post/delete scaffolding for the TodoRestController
         "/api/todos" (resources: "todoRest")
+        "/api/todos2" (resources: "todoRest2")
 
         "/$controller/$action?/$id?(.$format)?"{
             constraints {
