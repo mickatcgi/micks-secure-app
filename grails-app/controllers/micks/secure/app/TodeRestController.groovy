@@ -2,13 +2,15 @@ package micks.secure.app
 import grails.plugin.springsecurity.annotation.Secured
 import grails.web.RequestParameter
 
-import javax.servlet.http.HttpServletResponse
-
 @Secured(['ROLE_ADMIN', 'ROLE_USER', 'ROLE_ANONYMOUS'])
 class TodeRestController {
 
     static responseFormats = ['json', 'xml']
 
+    // Save() method is used for new and existing objects
+    static allowedMethods = [save:['POST', 'PUT']]
+
+    TodoService todoService
     def springSecurityService
 
     def index() {
@@ -16,40 +18,53 @@ class TodeRestController {
     }
 
     def save(Todo todo) {
-        todo.validate()
-        if (!todo.hasErrors()){
-            def user = springSecurityService.currentUser
-
-            // If you don't flush you don't get dateCreated/lastUpdated fields returned.
-            def newTodo = todo.save(failOnError: true, flush: true)
-            log.info("Successfully saved Todo: ${newTodo.toString()}")
-            respond newTodo, status: HttpServletResponse.SC_CREATED
-        } else {
-            // If a todo fails validation it will return an unprocessoble entry (422)
-            // because it still has errors. To return the original todo you have to fix
-            // it and revalidate it to remove the errors.
-            logAllErrors(todo.errors)
-            render(status: 418, text: todo.errors.fieldErrors.join(','))
+        try {
+            log.info("SAVE TODO starting: ${todo.toString()}")
+            boolean newTodo = todo.id == null ? true : false
+            Todo savedTodo = todoService.saveTodo(todo)
+            log.info("SAVED TODO complete: ${savedTodo.toString()}")
+            respond savedTodo, status: newTodo ? 201 : 200
+        } catch (TodoException te) {
+            log.info("SAVE TODO failed with : ${te.message}")
+            render(status: 400, text: te.message)
         }
     }
 
-    def update(Todo todo) {
-        todo.validate()
-        if (!todo.hasErrors()){
-            def user = springSecurityService.currentUser
+//    def save(Todo todo) {
+//        todo.validate()
+//        if (!todo.hasErrors()){
+//            def user = springSecurityService.currentUser
+//
+//            // If you don't flush you don't get dateCreated/lastUpdated fields returned.
+//            def newTodo = todo.save(failOnError: true, flush: true)
+//            log.info("Successfully saved Todo: ${newTodo.toString()}")
+//            respond newTodo, status: HttpServletResponse.SC_CREATED
+//        } else {
+//            // If a todo fails validation it will return an unprocessoble entry (422)
+//            // because it still has errors. To return the original todo you have to fix
+//            // it and revalidate it to remove the errors.
+//            logAllErrors(todo.errors)
+//            render(status: 418, text: todo.errors.fieldErrors.join(','))
+//        }
+//    }
 
-            // If you don't flush you don't get dateCreated/lastUpdated fields returned.
-            def updatedTodo = todo.save(failOnError: true, flush: true)
-            log.info("Successfully updated Todo: ${updatedTodo.toString()}")
-            render(status: HttpServletResponse.SC_OK)
-        } else {
-            // If a todo fails validation it will return an unprocessoble entry (422)
-            // because it still has errors. To return the original todo you have to fix
-            // it and revalidate it to remove the errors.
-            logAllErrors(todo.errors)
-            render(status: 418, text: todo.errors.fieldErrors.join(','))
-        }
-    }
+//    def update(Todo todo) {
+//        todo.validate()
+//        if (!todo.hasErrors()) {
+//            def user = springSecurityService.currentUser
+//
+//            // If you don't flush you don't get dateCreated/lastUpdated fields returned.
+//            def updatedTodo = todo.save(failOnError: true, flush: true)
+//            log.info("Successfully updated Todo: ${updatedTodo.toString()}")
+//            render(status: HttpServletResponse.SC_OK)
+//        } else {
+//            // If a todo fails validation it will return an unprocessoble entry (422)
+//            // because it still has errors. To return the original todo you have to fix
+//            // it and revalidate it to remove the errors.
+//            logAllErrors(todo.errors)
+//            render(status: 418, text: todo.errors.fieldErrors.join(','))
+//        }
+//    }
 
     def show(@RequestParameter('id') int todoId) {
         log.info("Show rendering todo = ${todoId}")

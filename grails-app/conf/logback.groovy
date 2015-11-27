@@ -25,4 +25,6 @@ if (Environment.isDevelopmentMode() && targetDir) {
 
 // Console logging added by Mick - add false at the end to prevent double logging.
 logger 'grails.app.controllers.micks.secure.app', DEBUG, ['STDOUT'], false
+logger 'grails.app.services.micks.secure.app', DEBUG, ['STDOUT'], false
+logger 'grails.app.domain.micks.secure.app', DEBUG, ['STDOUT'], false
 logger 'grails.app.taglib.micks.secure.app', DEBUG, ['STDOUT'], false

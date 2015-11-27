@@ -17,10 +17,17 @@ import javax.servlet.http.HttpServletResponse
 @Stepwise
 class TodeRestControllerSpec extends Specification {
 
+    TodoService mockTodoService = Mock(TodoService)
+
     def setupSpec() {
         defineBeans {
             springSecurityService(SpringSecurityService)
         }
+    }
+
+    def setup() {
+        //1 * mockTodoService.saveTodo(_) >> new Todo(description: "Mock Todo")
+        controller.todoService = mockTodoService
     }
 
     def cleanup() {
@@ -60,6 +67,7 @@ class TodeRestControllerSpec extends Specification {
     void "POST a single new todo as JSON"() {
         given: "A set of Todos to update and a user Id"
         def (User testUser, Todo testTodo) = initializeUserAndTodos()
+        1 * mockTodoService.saveTodo(_) >> new Todo(id: 99, description: "Mock Todo", notes: "Total Mockery")
 
         when: "I invoke the save action with a JSON Todo request"
         String json = '{ "description": "New todo from POST unit test", "notes": "Hello Kitty", "user": { "id": ' +
@@ -75,18 +83,20 @@ class TodeRestControllerSpec extends Specification {
         println("JSON POST Response text = ${response?.text}")                  // Returned from render()
         response.status != HttpServletResponse.SC_METHOD_NOT_ALLOWED
         response.status == 201
-        response.json.id != null
-        println("JSON POST Response = ${response?.json}")
+        response?.json.description == "Mock Todo"
+        response?.json.notes == "Total Mockery"
+        printf("JSON POST Response = ${response?.json}")
 
     }
 
     void "POST a single new bad todo as JSON which fails validation"() {
         given: "A set of Todos to update and a user Id"
         def (User testUser, Todo testTodo) = initializeUserAndTodos()
+        Todo badTodo = new Todo(notes: "Missing required description", user: testUser)
+        1 * mockTodoService.saveTodo(_) >> { throw new TodoException(message: "Todo failed validation", todo: null) }
 
         when: "I invoke the save action with a JSON Todo with missing required description"
-        String json = '{ "notes": "Theres no gubbins in this todo", "user": { "id": ' +
-                '"' + testUser.getId() + '" } }'
+        String json = '{ notes: "Missing required description", user: { id: ' + testUser.getId() + ' } }'
         request.json = json
         request.contentType = JSON_CONTENT_TYPE
         request.method = 'POST'         // Force a POST otherwise we get a 405 method not allowed response
@@ -94,31 +104,33 @@ class TodeRestControllerSpec extends Specification {
         controller.save()
 
         then: "I get a 418 JSON response with an error message for the missing description"
-        println("JSON POST Response errorMessage = ${response?.errorMessage}")  // Returned from sendError()
-        println("JSON POST Response text = ${response?.text}")                  // Returned from render()
+        println("JSON POST bad todo Response errorMessage = ${response?.errorMessage}")  // Returned from sendError()
+        println("JSON POST bad todo Response text = ${response?.text}")                  // Returned from render()
         response.status != HttpServletResponse.SC_METHOD_NOT_ALLOWED
-        response.status == 418
+        response.status == 400
     }
 
     void "PUT a single existing Todo as JSON"() {
         given: "A set of Todos to update and a user Id"
         def (User testUser, Todo testTodo) = initializeUserAndTodos()
+        1 * mockTodoService.saveTodo(_) >> new Todo(id: 99, description: "Mock Todo", notes: "Total Mockery")
 
         when: "I invoke the update action with a JSON Todo request"
         String json = '{ "id": ' + testTodo.getId() +
                 ', "description": "Updated todo from PUT unit test", "notes": "Hello Kitty" }'
         request.json = json
         request.contentType = JSON_CONTENT_TYPE
-        request.method = 'PUT'         // Force a PUT otherwise we get a 405 method not allowed response
+        request.method = 'POST'         // Force a PUT otherwise we get a 405 method not allowed response
         params.id = testTodo.id
         println("About to PUT JSON Todo = ${json}")
-        controller.update()
+        controller.save()
 
         then: "I get a 201 JSON response with the id of the new PUT"
         response.status != HttpServletResponse.SC_METHOD_NOT_ALLOWED
-        response.status == HttpServletResponse.SC_OK
-        println("JSON PUT Response for todo ${testTodo.id} : status = ${response?.status}")
-        println("JSON PUT Response errorMessage = ${response?.errorMessage}")
+        response.status == 200
+        response?.json.description == "Mock Todo"
+        response?.json.notes == "Total Mockery"
+        printf("JSON PUT Response = ${response?.json}")
     }
 
     void "GET a single todo returns a 405 not implemented yet"() {
@@ -131,7 +143,7 @@ class TodeRestControllerSpec extends Specification {
 
         then: "I get a 405 error status back"
         response.status == HttpServletResponse.SC_METHOD_NOT_ALLOWED
-        println("JSON GET Response for todo ${testTodo.id} : status = ${response?.status}")
+        println("JSON GET not implemented Response for todo ${testTodo.id} : status = ${response?.status}")
     }
 
     def private initializeUserAndTodos() {
