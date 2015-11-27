@@ -1,5 +1,6 @@
 package micks.secure.app
 import grails.plugin.springsecurity.annotation.Secured
+import grails.web.RequestParameter
 
 import javax.servlet.http.HttpServletResponse
 
@@ -49,6 +50,22 @@ class TodeRestController {
             render(status: 418, text: todo.errors.fieldErrors.join(','))
         }
     }
+
+    def show(@RequestParameter('id') int todoId) {
+        log.info("Show rendering todo = ${todoId}")
+        render(status: 405, text: "Not implemented yet. Unable to show todo ${todoId}")
+    }
+
+    def delete(@RequestParameter('id') int todoId) {
+        log.info("Delete rendering todo = ${todoId}")
+        render(status: 405, text: "Not implemented yet. Unable to delete todo ${todoId}")
+    }
+
+    def patch(@RequestParameter('id') int todoId) {
+        log.info("Patch rendering todo = ${todoId}")
+        render(status: 405, text: "Not implemented yet. Unable to patch todo ${todoId}")
+    }
+
 
     private void logAllErrors(errorList) {
         errorList.eachWithIndex {

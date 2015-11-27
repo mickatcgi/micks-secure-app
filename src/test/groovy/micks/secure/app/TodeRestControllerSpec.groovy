@@ -84,7 +84,7 @@ class TodeRestControllerSpec extends Specification {
         given: "A set of Todos to update and a user Id"
         def (User testUser, Todo testTodo) = initializeUserAndTodos()
 
-        when: "I invoke the save action with a JSON Todo request"
+        when: "I invoke the save action with a JSON Todo with missing required description"
         String json = '{ "notes": "Theres no gubbins in this todo", "user": { "id": ' +
                 '"' + testUser.getId() + '" } }'
         request.json = json
@@ -93,7 +93,7 @@ class TodeRestControllerSpec extends Specification {
         println("About to POST JSON Todo = ${json}")
         controller.save()
 
-        then: "I get a 418 JSON response with an error message"
+        then: "I get a 418 JSON response with an error message for the missing description"
         println("JSON POST Response errorMessage = ${response?.errorMessage}")  // Returned from sendError()
         println("JSON POST Response text = ${response?.text}")                  // Returned from render()
         response.status != HttpServletResponse.SC_METHOD_NOT_ALLOWED
@@ -117,8 +117,21 @@ class TodeRestControllerSpec extends Specification {
         then: "I get a 201 JSON response with the id of the new PUT"
         response.status != HttpServletResponse.SC_METHOD_NOT_ALLOWED
         response.status == HttpServletResponse.SC_OK
-        println("JSON PUT Response status = ${response?.status}")
+        println("JSON PUT Response for todo ${testTodo.id} : status = ${response?.status}")
         println("JSON PUT Response errorMessage = ${response?.errorMessage}")
+    }
+
+    void "GET a single todo returns a 405 not implemented yet"() {
+        given: "A set of Todos and a user list"
+        def (User testUser, Todo testTodo) = initializeUserAndTodos()
+
+        when: "I invoke the GET todo action with a todo Id"
+        params.id = testTodo.id
+        controller.show()
+
+        then: "I get a 405 error status back"
+        response.status == HttpServletResponse.SC_METHOD_NOT_ALLOWED
+        println("JSON GET Response for todo ${testTodo.id} : status = ${response?.status}")
     }
 
     def private initializeUserAndTodos() {
