@@ -1,20 +1,14 @@
 package micks.secure.app
-
 import grails.plugin.springsecurity.annotation.Secured
-import grails.rest.RestfulController
 
 import javax.servlet.http.HttpServletResponse
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER', 'ROLE_ANONYMOUS'])
-class TodeRestController extends RestfulController {
+class TodeRestController {
 
     static responseFormats = ['json', 'xml']
 
     def springSecurityService
-
-    TodeRestController() {
-        super(Todo)
-    }
 
     def index() {
         respond Todo.list()
