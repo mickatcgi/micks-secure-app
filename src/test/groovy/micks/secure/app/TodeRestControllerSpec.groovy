@@ -100,6 +100,26 @@ class TodeRestControllerSpec extends Specification {
         response.status == 418
     }
 
+    void "PUT a single existing Todo as JSON"() {
+        given: "A set of Todos to update and a user Id"
+        def (User testUser, Todo testTodo) = initializeUserAndTodos()
+
+        when: "I invoke the update action with a JSON Todo request"
+        String json = '{ "id": ' + testTodo.getId() +
+                ', "description": "Updated todo from PUT unit test", "notes": "Hello Kitty" }'
+        request.json = json
+        request.contentType = JSON_CONTENT_TYPE
+        request.method = 'PUT'         // Force a PUT otherwise we get a 405 method not allowed response
+        params.id = testTodo.id
+        println("About to PUT JSON Todo = ${json}")
+        controller.update()
+
+        then: "I get a 201 JSON response with the id of the new PUT"
+        response.status != HttpServletResponse.SC_METHOD_NOT_ALLOWED
+        response.status == HttpServletResponse.SC_OK
+        println("JSON PUT Response status = ${response?.status}")
+        println("JSON PUT Response errorMessage = ${response?.errorMessage}")
+    }
 
     def private initializeUserAndTodos() {
 

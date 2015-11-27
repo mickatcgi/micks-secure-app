@@ -85,8 +85,8 @@ class TodoRestControllerSpec extends Specification {
         def (User testUser, Todo testTodo) = initializeUserAndTodos()
 
         when: "I invoke the update action with a JSON Todo request"
-        String json = '{ "id": ' + testTodo.getId() +
-                '", "description": "Updated todo from PUT unit test", "notes": "Hello Kitty" }'
+        String json = '{ "id": ' + testTodo.id +
+                ', "description": "Updated todo from PUT unit test", "notes": "Hello Kitty" }'
         request.json = json
         request.contentType = JSON_CONTENT_TYPE
         request.method = 'PUT'         // Force a PUT otherwise we get a 405 method not allowed response
@@ -98,9 +98,9 @@ class TodoRestControllerSpec extends Specification {
         response.status != HttpServletResponse.SC_METHOD_NOT_ALLOWED
         response.status == HttpServletResponse.SC_OK
         response.json.id != null
+        println("JSON PUT Response status = ${response?.status}")
         println("JSON PUT Response errorMessage = ${response?.errorMessage}")
         println("JSON PUT Response = ${response?.json}")
-
     }
 
     def private initializeUserAndTodos() {
