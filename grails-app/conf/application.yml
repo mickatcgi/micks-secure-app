@@ -65,6 +65,19 @@ grails:
                 scriptlets: html
                 taglib: none
                 staticparts: none
+    mail:
+        host: "smtp.gmail.com"
+        port: 587
+        username: "mickster.gallagher@gmail.com"
+        password: "cycler7Bike"
+        smtpAuthenticationRequired: true
+        smtpStartTlsEnable: true
+        props: ["mail.smtp.auth":"true",
+                "mail.smtp.socketFactory.port":"587",
+                "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+                "mail.smtp.socketFactory.fallback":"false"
+                ]
+
 ---
 hibernate:
     cache:
