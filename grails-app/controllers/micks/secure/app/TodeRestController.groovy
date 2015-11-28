@@ -1,6 +1,7 @@
 package micks.secure.app
 import grails.plugin.springsecurity.annotation.Secured
 import grails.web.RequestParameter
+import micks.secure.app.commands.TodoCommand
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER', 'ROLE_ANONYMOUS'])
 class TodeRestController {
@@ -19,8 +20,8 @@ class TodeRestController {
 
     def save(TodoCommand todoCommand) {
         try {
-            log.info("SAVE TODO (via Command) starting: ${todoCommand?.description}")
-            boolean newTodo = todoCommand?.id == null ? true : false
+            log.info("SAVE TODO (via Command) starting: ${todoCommand?.id} - ${todoCommand?.description}")
+            boolean newTodo = todoCommand?.id == 0 ? true : false
 
             Todo realTodo = new Todo(todoCommand.properties)
 
@@ -33,9 +34,16 @@ class TodeRestController {
         }
     }
 
-    def update(Todo todo) {
-        log.info("UPDATE TODO starting: ${todo?.description}")
-        return save(todo)
+    /**
+     * I've configured URLMappings to send all PUT/Updates to save() and the unit tests work
+     * fine, but Google Chrome REST client does not work - it fails unless it can PUT to this
+     * update() method. So, for now leave update() as an active method.
+     * @param todoCommand
+     * @return
+     */
+    def update(TodoCommand todoCommand) {
+        log.info("UPDATE TODO (via Command) starting: ${todoCommand?.id} - ${todoCommand?.description}")
+        return save(todoCommand)
     }
 
     def show(@RequestParameter('id') int todoId) {

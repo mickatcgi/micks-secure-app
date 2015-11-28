@@ -120,7 +120,7 @@ class TodeRestControllerSpec extends Specification {
                 ', "description": "Updated todo from PUT unit test", "notes": "Hello Kitty" }'
         request.json = json
         request.contentType = JSON_CONTENT_TYPE
-        request.method = 'POST'         // Force a PUT otherwise we get a 405 method not allowed response
+        request.method = 'PUT'         // Force a PUT otherwise we get a 405 method not allowed response
         params.id = testTodo.id
         println("About to PUT JSON Todo = ${json}")
         controller.save()

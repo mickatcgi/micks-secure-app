@@ -1,7 +1,8 @@
-package micks.secure.app
+package micks.secure.app.commands
 
 import grails.validation.Validateable
 import groovy.transform.ToString
+import micks.secure.app.User
 
 /**
  * Created by mick on 11/27/2015.
