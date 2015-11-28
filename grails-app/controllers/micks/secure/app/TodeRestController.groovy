@@ -17,11 +17,14 @@ class TodeRestController {
         respond Todo.list()
     }
 
-    def save(Todo todo) {
+    def save(TodoCommand todoCommand) {
         try {
-            log.info("SAVE TODO starting: ${todo?.description}")
-            boolean newTodo = todo.id == null ? true : false
-            Todo savedTodo = todoService.saveTodo(todo)
+            log.info("SAVE TODO (via Command) starting: ${todoCommand?.description}")
+            boolean newTodo = todoCommand?.id == null ? true : false
+
+            Todo realTodo = new Todo(todoCommand.properties)
+
+            Todo savedTodo = todoService.saveTodo(realTodo)
             log.info("SAVED TODO complete: ${savedTodo?.description}")
             respond savedTodo, status: newTodo ? 201 : 200
         } catch (TodoException te) {
