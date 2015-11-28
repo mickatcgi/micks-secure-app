@@ -19,7 +19,7 @@ class RestInterceptorSpec extends Specification {
 
     void "Test rest interceptor matching"() {
         when:"A request matches the interceptor"
-            withRequest(controller:"rest")
+            withRequest(controller:"todeRest")
 
         then:"The interceptor does match"
             interceptor.doesMatch()
