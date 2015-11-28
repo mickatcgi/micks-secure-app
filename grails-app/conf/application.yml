@@ -66,6 +66,8 @@ grails:
                 taglib: none
                 staticparts: none
     mail:
+        disabled: true
+        poolSize: 5
         host: "smtp.gmail.com"
         port: 587
         username: "mickster.gallagher@gmail.com"

@@ -38,7 +38,7 @@ class TodoService {
                 log.info("NEW: TodoService validated successfully: ${todo?.description}")
             }
             savedTodo = todo.save(failOnError: true, flush: true)
-            //welcomeTextEmail()
+            welcomeTextEmail()
         } else {
             log.info("TodoService validation failed for: ${todo?.description}")
             throw new TodoException(message: "Todo failed validation", todo: todo)
@@ -56,7 +56,7 @@ class TodoService {
                 subject "Welcome to Hell...er, I mean Grails"
                 text """
                 Hi, ${recipient}. Great to have you on board
-                The devil..er, I mean the Grails team.
+                The devil...er, I mean the Grails team.
                 """
             }
         } catch (Exception e) {
