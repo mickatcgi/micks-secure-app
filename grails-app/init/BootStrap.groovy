@@ -24,11 +24,11 @@ class BootStrap {
      */
     def initUsers() {
 
-        Role adminRole = new Role('ROLE_ADMIN').save()
-        Role userRole = new Role('ROLE_USER').save()
+        Role adminRole = new Role('ROLE_ADMIN').save(flush: true)
+        Role userRole = new Role('ROLE_USER').save(flush: true)
 
-        User adminUser = new User('mick', 'password').save()
-        User standardUser = new User('billybob', 'password').save()
+        User adminUser = new User('mick', 'password').save(flush: true)
+        User standardUser = new User('billybob', 'password').save(flush: true)
 
         UserRole.create(adminUser, adminRole, true)
         UserRole.create(standardUser, userRole, true)
