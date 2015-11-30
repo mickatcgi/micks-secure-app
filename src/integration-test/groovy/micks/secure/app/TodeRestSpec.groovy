@@ -14,7 +14,7 @@ import wslite.rest.RESTClient
  *      Application does not need to be running
  * Runtime modes:
  *      Grails run-app runs the application in the dev database
- *      java -jar build/libs/micks-secure-app-0.1.jar runs the application in the test database
+ *      java -jar build/libs/micks-secure-app-0.1.jar runs the application in the test or prod database?
  */
 class TodeRestSpec extends Specification {
 
