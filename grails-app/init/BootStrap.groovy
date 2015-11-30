@@ -37,6 +37,7 @@ class BootStrap {
         assert Role.count() == 2
         assert UserRole.count() == 2
 
+        //log.info("Bootstrap.groovy - created two users: [${adminUser.username}] and [${standardUser.username}]")
         return [adminUser, standardUser]
     }
 
@@ -53,8 +54,11 @@ class BootStrap {
             completedDate = today - 1.week
         }
 
+        //log.info("Bootstrap.groovy - adding todos for: [${adminUser.username}] and [${standardUser.username}]")
+
         Todo todo1 = new Todo(user: adminUser, description: "Write some grails code 1", priority: "High",
-                folder: "Grails Coding", status: "In-progress", notes: "100 lines per day", dueDate: dueDate)
+                folder: "Grails Coding", status: "In-progress", notes: "100 lines per day", dueDate: dueDate,
+                completedDate: completedDate)
         Todo todo2 = new Todo(user: adminUser, description: "Write some groovy code 2", priority: "Medium",
                 folder: "Groovy Coding", status: "In-progress", notes: "200 lines per day", dueDate: dueDate,
                 completedDate: completedDate)
