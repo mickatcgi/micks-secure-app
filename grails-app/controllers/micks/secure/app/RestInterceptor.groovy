@@ -1,5 +1,7 @@
 package micks.secure.app
 
+import grails.util.Environment
+
 
 class RestInterceptor {
 
@@ -9,6 +11,7 @@ class RestInterceptor {
 
     boolean before() {
 
+        log.info("Testing in --> in ${Environment.current} environment")
         log.info("Testing format: ${request.format} and method: ${request.method} (by Mick)")
 
         // Test the request format

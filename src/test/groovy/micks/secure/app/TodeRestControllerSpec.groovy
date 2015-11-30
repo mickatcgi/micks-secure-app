@@ -3,7 +3,9 @@ package micks.secure.app
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
+import grails.util.Environment
 import groovy.time.TimeCategory
+import groovy.util.logging.Slf4j
 import spock.lang.Specification
 import spock.lang.Stepwise
 
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletResponse
 @TestFor(TodeRestController)
 @Mock([User, Todo, Role, UserRole])
 @Stepwise
+@Slf4j
 class TodeRestControllerSpec extends Specification {
 
     TodoService mockTodoService = Mock(TodoService)
@@ -26,6 +29,8 @@ class TodeRestControllerSpec extends Specification {
     }
 
     def setup() {
+        log.info("Testing in --> in ${Environment.current} environment")
+
         //1 * mockTodoService.saveTodo(_) >> new Todo(description: "Mock Todo")
         controller.todoService = mockTodoService
     }

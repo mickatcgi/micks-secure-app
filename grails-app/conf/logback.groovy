@@ -29,3 +29,6 @@ logger 'grails.app.services.micks.secure.app', DEBUG, ['STDOUT'], false
 logger 'grails.app.interceptors.micks.secure.app', DEBUG, ['STDOUT'], false
 logger 'grails.app.domain.micks.secure.app', DEBUG, ['STDOUT'], false
 logger 'grails.app.taglib.micks.secure.app', DEBUG, ['STDOUT'], false
+
+// Catch-all - this covers functional and unit tests not in the grails-app folder
+logger 'micks.secure.app', DEBUG,  ['STDOUT'], false
