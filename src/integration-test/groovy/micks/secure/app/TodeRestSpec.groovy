@@ -1,5 +1,7 @@
 package micks.secure.app
 
+import grails.util.Environment
+import groovy.util.logging.Slf4j
 import spock.lang.Shared
 import spock.lang.Specification
 import wslite.http.auth.HTTPBasicAuthorization
@@ -16,6 +18,7 @@ import wslite.rest.RESTClient
  *      Grails run-app runs the application in the dev database
  *      java -jar build/libs/micks-secure-app-0.1.jar runs the application in the test or prod database?
  */
+@Slf4j
 class TodeRestSpec extends Specification {
 
     @Shared
@@ -23,6 +26,7 @@ class TodeRestSpec extends Specification {
             new RESTClient("http://localhost:9001/api/todes")
 
     void setup() {
+        log.info("Testing in --> in ${Environment.current} environment")
         restClient.authorization = new HTTPBasicAuthorization("mick", "password")
         restClient.httpClient.sslTrustAllCerts = true
     }

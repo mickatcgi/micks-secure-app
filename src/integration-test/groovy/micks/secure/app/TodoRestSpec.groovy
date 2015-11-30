@@ -1,5 +1,7 @@
 package micks.secure.app
 import geb.spock.GebSpec
+import grails.util.Environment
+import groovy.util.logging.Slf4j
 import spock.lang.Shared
 import wslite.http.auth.HTTPBasicAuthorization
 import wslite.rest.ContentType
@@ -7,6 +9,7 @@ import wslite.rest.RESTClient
 /**
  * See the API for {@link grails.test.mixin.support.GrailsUnitTestMixin} for usage instructions
  */
+@Slf4j
 class TodoRestSpec extends GebSpec {
 
     @Shared
@@ -14,6 +17,7 @@ class TodoRestSpec extends GebSpec {
             new RESTClient("http://localhost:9001/api/todos")
 
     void setup() {
+        log.info("Testing in --> in ${Environment.current} environment")
         restClient.authorization = new HTTPBasicAuthorization("mick", "password")
         restClient.httpClient.sslTrustAllCerts = true
     }

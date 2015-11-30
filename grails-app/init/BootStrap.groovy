@@ -1,3 +1,4 @@
+import grails.util.Environment
 import groovy.time.TimeCategory
 import micks.secure.app.Role
 import micks.secure.app.Todo
@@ -10,6 +11,9 @@ class BootStrap {
      * Initialize everything...
      */
     def init = { servletContext ->
+
+        log.info("Bootstrap.groovy --> in ${Environment.current}")
+
         def (User adminUser, User standardUser) = initUsers()
         initTodos(adminUser, standardUser)
         initMarshallers()
