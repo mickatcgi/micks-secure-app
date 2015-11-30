@@ -6,6 +6,7 @@
     </head>
     <body>
 
+        <h1>Mick's SPA displaying single page Todo</h1>
         <div>
             <f:display bean="todo"/>
         </div>

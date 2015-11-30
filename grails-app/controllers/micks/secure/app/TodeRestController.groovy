@@ -38,7 +38,8 @@ class TodeRestController {
     def singlePage(@RequestParameter('todeRestId') int todoId) {
         log.info("SinglePage rendering todo = ${todoId}")
         Todo todo = Todo.findById(todoId)
-        respond todo
+        //respond todo
+        [ todo: todo ]
     }
 
     /**
