@@ -119,7 +119,7 @@ environments:
             url: jdbc:mysql://localhost:3306/micks-secure-app-test
     production:
         dataSource:
-            dbCreate: update
+            dbCreate: create-drop
             url: jdbc:mysql://localhost:3306/micks-secure-app-prod
             properties:
                 jmxEnabled: true
