@@ -18,6 +18,9 @@
                     <li class="fieldcontain" ng-repeat="myTodo in allTodos">Todo = {{myTodo.description}}</li>
                 </ul>
 
+                <hr/>
+                <p>{{oneTodo.id}}</p>
+                <p>{{oneTodo}}</p>
             </div>
         </div>
 
