@@ -7,7 +7,14 @@ import wslite.rest.ContentType
 import wslite.rest.RESTClient
 
 /**
- * See the API for {@link grails.test.mixin.support.GrailsUnitTestMixin} for usage instructions
+ * Integration/functional tests
+ *      Hit the currently listening application database - could be test or dev
+ *      Must be run with the application running and listening on a valid port
+ * Unit tests hit the dev database (no listener needs to be active)
+ *      Application does not need to be running
+ * Runtime modes:
+ *      Grails run-app runs the application in the dev database
+ *      java -jar build/libs/micks-secure-app-0.1.jar runs the application in the test database
  */
 class TodeRestSpec extends Specification {
 
