@@ -8,6 +8,8 @@ angular.module('micks-todos', ['restangular'])
         function ($scope, Restangular, $log) {
 
             $scope.name = "singlePageController";
+            $log.info("Loading controller --> " + $scope.name)
+
             $scope.allTodos = []
             $scope.oneTodo = null
 
