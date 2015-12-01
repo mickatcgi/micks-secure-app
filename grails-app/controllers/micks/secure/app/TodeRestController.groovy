@@ -9,12 +9,13 @@ class TodeRestController {
     static responseFormats = ['json', 'xml']
 
     // Save() method is used for new and existing objects
-    static allowedMethods = [save:['POST', 'PUT']]
+    static allowedMethods = [save:['POST', 'PUT'], show:['GET'], singlePage:['GET']]
 
     TodoService todoService
     def springSecurityService
 
     def index() {
+        log.info("Index rendering ALL todo's")
         respond Todo.list()
     }
 
@@ -34,6 +35,13 @@ class TodeRestController {
         }
     }
 
+    def singlePage(@RequestParameter('todeRestId') int todoId) {
+        log.info("SinglePage rendering todo = ${todoId}")
+        Todo todo = Todo.findById(todoId)
+        //respond todo
+        [ todo: todo ]
+    }
+
     /**
      * I've configured URLMappings to send all PUT/Updates to save() and the unit tests work
      * fine, but Google Chrome REST client does not work - it fails unless it can PUT to this
@@ -48,7 +56,9 @@ class TodeRestController {
 
     def show(@RequestParameter('id') int todoId) {
         log.info("Show rendering todo = ${todoId}")
-        render(status: 405, text: "Not implemented yet. Unable to show todo ${todoId}")
+        //render(status: 405, text: "Not implemented yet. Unable to show todo ${todoId}")
+        Todo todo = Todo.findById(todoId)
+        respond todo
     }
 
     def delete(@RequestParameter('id') int todoId) {

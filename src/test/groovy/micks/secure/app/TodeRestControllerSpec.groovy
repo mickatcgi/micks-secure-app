@@ -146,9 +146,10 @@ class TodeRestControllerSpec extends Specification {
         params.id = testTodo.id
         controller.show()
 
-        then: "I get a 405 error status back"
-        response.status == HttpServletResponse.SC_METHOD_NOT_ALLOWED
-        println("JSON GET not implemented Response for todo ${testTodo.id} : status = ${response?.status}")
+        then: "I get a 200 error status back"
+        response.status != HttpServletResponse.SC_METHOD_NOT_ALLOWED
+        response.status == 200
+        printf("JSON GET/Show() Response = ${response?.json}")
     }
 
     def private initializeUserAndTodos() {

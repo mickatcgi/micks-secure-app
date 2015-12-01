@@ -6,6 +6,7 @@ class UrlMappings {
         "/api/todos" (resources: "todoRest")
         "/api/todes" (resources: "todeRest") {
 
+            "/singlePage" (controller: "todeRest", action: "singlePage", method: "GET")
             action = [PUT: "save", POST: "save"]
         }
 

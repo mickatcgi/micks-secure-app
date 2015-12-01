@@ -12,6 +12,7 @@ class RestInterceptor {
     boolean before() {
 
         log.info("Testing in --> in ${Environment.current} environment")
+        log.info("Processing URL = ${request.forwardURI}")
         log.info("Testing format: ${request.format} and method: ${request.method} (by Mick)")
 
         // Test the request format
