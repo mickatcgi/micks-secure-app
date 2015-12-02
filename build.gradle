@@ -66,6 +66,7 @@ dependencies {
     compile "org.grails.plugins:scaffolding"
 
     runtime "org.grails.plugins:asset-pipeline"
+    //runtime 'org.grails.plugins:asset-pipeline:3.0.10'
 
     compile "org.grails:grails-plugin-testing"
     compile "org.grails.plugins:geb"
@@ -87,7 +88,6 @@ dependencies {
     testCompile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
     testCompile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
 
-    runtime 'org.grails.plugins:asset-pipeline:3.0.10'
     //compile "org.grails.plugins:geb:$gebVersion"
 
     // End of Micks Stuff
