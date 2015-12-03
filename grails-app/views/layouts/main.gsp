@@ -8,7 +8,12 @@
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <asset:stylesheet src="application.css"/>
-    <asset:javascript src="application.js"/>
+    <asset:javascript src="jquery-2.1.3.js"/>
+    <asset:javascript src="lodash.js"/>
+    <asset:javascript src="angular.js"/>
+    <asset:javascript src="angular-route.js"/>
+    <asset:javascript src="restangular.js"/>
+    <asset:javascript src="singlePageController.js"/>
 
     <g:layoutHead/>
 </head>

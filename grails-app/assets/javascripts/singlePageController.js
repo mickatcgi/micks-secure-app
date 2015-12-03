@@ -1,7 +1,8 @@
 angular.module('micks-todos', ['restangular'])
-.config(function(RestangularProvider) {
+.config(["RestangularProvider",
+    function(RestangularProvider) {
         RestangularProvider.setBaseUrl('/api/todes');
-})
+}])
 .controller("singlePageController",
     ["$scope", "Restangular", "$log",
 
