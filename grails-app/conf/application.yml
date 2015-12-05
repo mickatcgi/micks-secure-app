@@ -3,8 +3,9 @@ grails:
     profile: web
     codegen:
         defaultPackage: micks.secure.app
-    assets.minifyJs: false
-    assets.bundle: false
+    assets.minifyJs: true
+    assets.minifyCss: true
+    assets.bundle: true
 info:
     app:
         name: '@info.app.name@'

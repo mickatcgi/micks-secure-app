@@ -6,6 +6,11 @@
 // to create separate JavaScript files as needed.
 //
 //= require jquery-2.1.3.js
+//= require angular.js
+//= require angular-route.js
+//= require lodash.js
+//= require restangular.js
+//= require singlePageController.js
 //= require_tree .
 //= require_self
 
