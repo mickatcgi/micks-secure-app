@@ -37,7 +37,14 @@
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
 
-            <f:display bean="user"/>
+            <ol class="property-list">
+                User Name: <g:fieldValue bean="${user}" field="username"/><br/>
+                <f:display bean="${user}" property="username"/>
+                <f:display bean="user" property="password" label="billybob"/>
+                <f:display bean="user" property="enabled"/>
+                <f:display bean="user" property="passwordExpired"/>
+                <f:all bean="user" />
+            </ol>
 
             <g:form resource="${this.user}" method="DELETE">
                 <fieldset class="buttons">
