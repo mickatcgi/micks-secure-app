@@ -1,3 +1,7 @@
+<!-- calling this _displayWrapper.gsp caused the index.gsp page to show garbage too.
+     The goal was only to alter the display of show.gsp.
+-->
+
 <li class="fieldcontain">
     <span id="${label}" class="${label}"><g:message code="${label}" default="${label}" /></span>
     <span class="property-value" aria-labelledby="${label}">

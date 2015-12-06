@@ -1,0 +1,27 @@
+
+.micks_align {
+    margin:0px 40px;
+}
+
+.micks_label {
+    font-size: 1.1em;
+    color: blue;
+    font-style: italic;
+}
+
+.micks_todo {
+    font-size: 1.1em;
+    color: gray;
+    font-style: italic;
+}
+
+.Username {
+    font-weight: bold;
+    color: red;
+}
+
+.billybob {
+    font-weight: bold;
+    color: green;
+    font-style: italic;
+}
