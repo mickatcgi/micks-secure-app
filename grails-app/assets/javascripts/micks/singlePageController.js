@@ -12,7 +12,9 @@ angular.module('micks-todos', ['restangular'])
             $log.info("Loading controller --> " + $scope.name)
 
             $scope.allTodos = []
-            $scope.oneTodo = null
+            $scope.oneTodo = {}
+            $scope.randomTodo = {}
+            $scope.count = -1
 
             Restangular.all('/').getList().then(
                 function(result) {
@@ -34,8 +36,8 @@ angular.module('micks-todos', ['restangular'])
                 Restangular.one('/', 8).get().then(
                     function(result) {
                        // Plain() method strips off extra restangular fluff from responses
-                       $scope.oneTodo = angular.toJson(result.plain())
-                       $log.info("Restangular.one() returned -> " + $scope.oneTodo)
+                       $scope.oneTodo['myTodo'] = angular.toJson(result.plain())
+                       $log.info("Restangular.one() returned -> " + angular.toJson($scope.oneTodo))
                     },
                     function(error) {
                         $log.error("Error in Restangular.one() calll -> " + error.data.errorMessage)
@@ -44,5 +46,10 @@ angular.module('micks-todos', ['restangular'])
                 return
             }
 
+            $scope.todoCount = function() {
+                $log.info("Restangular todoCount starting...")
+            }
+
             $scope.show()
+
 }]);
