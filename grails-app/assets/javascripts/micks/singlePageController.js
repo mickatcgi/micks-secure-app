@@ -54,6 +54,23 @@ angular.module('micks-todos', ['restangular'])
             $scope.randomTodo = function() {
                 $scope.randomInt = Math.floor((Math.random() * 10) + 1);
                 $log.info("Restangular randomTodo looking for id = " + $scope.randomInt)
+
+                 Restangular.one('/singlePage', $scope.randomInt).get().then(
+                                    function(result) {
+                                       // Plain() method strips off extra restangular fluff from responses
+                                       if (typeof result === 'undefined') {
+                                            $scope.randomTodo['randomTodo'] = angular.toJson(result.plain())
+                                            $log.info("Restangular.one() randomTodo returned -> "
+                                                + angular.toJson($scope.randomTodo))
+                                        } else {
+                                            $log.info("Restangular singlePage call returned undefined")
+                                        }
+                                    },
+                                    function(error) {
+                                        $log.error("Error in Restangular.one() calll -> " + error.data.errorMessage)
+                                    }
+                                )
+                                return
             }
 
             $scope.todoCount
