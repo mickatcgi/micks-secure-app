@@ -62,10 +62,10 @@
                 </table>
 
                 <hr/>
-                <button type="button" class="btn btn-xs btn-primary">Random Todo</button>
+                <button type="button" class="btn btn-xs btn-primary" ng-click="randomTodo()">Random Todo</button>
                 <p>Show id = {{oneTodo.myTodo.id}}</p>
                 <p>Show full todo = {{oneTodo.myTodo}}</p>
-                <p>Show random Todo [{{count}}] = {{oneTodo.randomTodo}}</p>
+                <p>Show random Todo [{{randomInt}}] = {{oneTodo.randomTodo}}</p>
                 <hr/>
             </div>
 

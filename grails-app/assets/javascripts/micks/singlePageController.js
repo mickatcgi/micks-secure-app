@@ -13,6 +13,7 @@ angular.module('micks-todos', ['restangular'])
 
             $scope.allTodos = []
             $scope.oneTodo = {}
+            $scope.randomInt = -1
             $scope.randomTodo = {}
             $scope.count = -1
 
@@ -50,6 +51,12 @@ angular.module('micks-todos', ['restangular'])
                 $log.info("Restangular todoCount starting...")
             }
 
+            $scope.randomTodo = function() {
+                $scope.randomInt = Math.floor((Math.random() * 10) + 1);
+                $log.info("Restangular randomTodo looking for id = " + $scope.randomInt)
+            }
+
+            $scope.todoCount
             $scope.show()
 
 }]);
