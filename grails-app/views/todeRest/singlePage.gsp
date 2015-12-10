@@ -65,7 +65,7 @@
                 <button type="button" class="btn btn-xs btn-primary" ng-click="randomTodo()">Random Todo</button>
                 <p>Show id = {{oneTodo.myTodo.id}}</p>
                 <p>Show full todo = {{oneTodo.myTodo}}</p>
-                <p>Show random Todo [{{randomInt}}] = {{oneTodo.randomTodo}}</p>
+                <p>Show random Todo [{{randomInt}}] = {{randomTodo.randomTodo}}</p>
                 <hr/>
             </div>
 

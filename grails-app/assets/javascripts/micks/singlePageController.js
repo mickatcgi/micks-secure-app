@@ -45,7 +45,7 @@ angular.module('micks-todos', ['restangular'])
                     function(result) {
                        // Plain() method strips off extra restangular fluff from responses
                        $scope.oneTodo['myTodo'] = angular.toJson(result.plain())
-                       $log.info("Restangular.one() returned -> " + angular.toJson($scope.oneTodo))
+                       $log.info("Restangular.one() show() returned -> " + angular.toJson($scope.oneTodo))
                     },
                     function(error) {
                         $log.error("Error in Restangular.one() calll -> " + error.data.errorMessage)
@@ -73,11 +73,12 @@ angular.module('micks-todos', ['restangular'])
                                     function(result) {
                                        // Plain() method strips off extra restangular fluff from responses
                                        if (typeof result === 'undefined') {
-                                            $log.info("Restangular randomTodo call returned undefined")
+                                            $log.info("Restangular randomTodo call returned undefined bugger")
                                         } else {
+                                            $log.info("RandomTodo result = " + angular.toJson(result.plain()))
                                             $scope.randomTodo['randomTodo'] = angular.toJson(result.plain())
-                                            $log.info("Restangular.one() randomTodo returned -> "
-                                                + angular.toJson($scope.randomTodo))
+                                            $log.info("Restangular.one() randomTodo returned defined -> "
+                                                + $scope.randomTodo.randomTodo)
                                         }
                                     },
                                     function(error) {
