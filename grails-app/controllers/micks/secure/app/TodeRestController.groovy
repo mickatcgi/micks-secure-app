@@ -42,6 +42,11 @@ class TodeRestController {
         [ todo: todo ]
     }
 
+    def randomTodo(@RequestParameter('todeRestId') int todoId) {
+        log.info("RandomTodo rendering todo = ${todoId}")
+        Todo todo = Todo.findById(todoId)
+        respond todo
+    }
     /**
      * I've configured URLMappings to send all PUT/Updates to save() and the unit tests work
      * fine, but Google Chrome REST client does not work - it fails unless it can PUT to this

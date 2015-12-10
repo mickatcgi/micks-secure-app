@@ -17,6 +17,9 @@ angular.module('micks-todos', ['restangular'])
             $scope.randomTodo = {}
             $scope.count = -1
 
+            /*
+            * Invoke the /api/todes index() method and return all todos by default
+            */
             Restangular.all('/').getList().then(
                 function(result) {
                     $scope.allTodos = result
@@ -28,6 +31,10 @@ angular.module('micks-todos', ['restangular'])
                 }
             )
 
+            /*
+            * Invoke the /api/todes/8 show() method and return a single todo
+            * Executed by default
+            */
             $scope.show = function() {
 
                 $log.info("Restangular.one() invoking show() REST call...")
@@ -47,23 +54,30 @@ angular.module('micks-todos', ['restangular'])
                 return
             }
 
+            /*
+            * Invoke the /api/todes/count count() method and return a count of all todos
+            * Executed by default
+            */
             $scope.todoCount = function() {
                 $log.info("Restangular todoCount starting...")
             }
 
+            /*
+             * Invoke the /api/todes/id/randomTodo method and return a todo given the id
+             */
             $scope.randomTodo = function() {
                 $scope.randomInt = Math.floor((Math.random() * 10) + 1);
                 $log.info("Restangular randomTodo looking for id = " + $scope.randomInt)
 
-                 Restangular.one('/singlePage', $scope.randomInt).get().then(
+                 Restangular.one('/', $scope.randomInt).customGET("randomTodo").then(
                                     function(result) {
                                        // Plain() method strips off extra restangular fluff from responses
                                        if (typeof result === 'undefined') {
+                                            $log.info("Restangular randomTodo call returned undefined")
+                                        } else {
                                             $scope.randomTodo['randomTodo'] = angular.toJson(result.plain())
                                             $log.info("Restangular.one() randomTodo returned -> "
                                                 + angular.toJson($scope.randomTodo))
-                                        } else {
-                                            $log.info("Restangular singlePage call returned undefined")
                                         }
                                     },
                                     function(error) {
