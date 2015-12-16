@@ -1,4 +1,4 @@
-<!-- calling this _displayWrapper.gsp caused the index.gsp page to show garbage too.
+<!-- calling this _displayWrapper.gsp caused the spaHome1.gsp page to show garbage too.
      The goal was only to alter the display of show.gsp.
 -->
 

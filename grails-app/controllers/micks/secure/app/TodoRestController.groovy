@@ -7,6 +7,7 @@ import grails.rest.RestfulController
 class TodoRestController extends RestfulController {
 
     static responseFormats = ['json', 'xml']
+    static defaultAction = "index"
 
     /**
      * Scaffolding which provides the full suite of REST actions for this controller - see URLMappings
@@ -18,8 +19,7 @@ class TodoRestController extends RestfulController {
      *
      * When adding a new To-do using POST don't forget to add the user: {id: xxx} json. Post with
      * Content-Type: application/json and post to http://localhost:9001/api/todos
-     * {description: "Billybob woz ere", notes:"Hello from the kittsville minus json extension", user: {id: 2}}
-     *
+     * {description: "Billybob woz ere", notes:"Hello from the kittsville minus json extension", user: {id: 2}}*
      * Now i just need to find out why Spring-security needs to be switched off to allow REST actions.
      * After a stop/start the TodoRestController POST/PUT actions seem to work just fine with Spring
      * Security enabled and working for the UI pages.
@@ -27,6 +27,22 @@ class TodoRestController extends RestfulController {
 
     TodoRestController() {
         super(Todo)
+    }
+
+    def spaHome1() {
+        log.info("In TodoRestController spaHome1() servicing spaHome1.gsp")
+    }
+
+    def getAllTodos() {
+        List<Todo> todoList = Todo.list()
+        Todo singleTodo = Todo.findById(1)
+        log.info("In TodoRestController spaHome() servicing spaHome2.gsp with ${todoList.size()} todos")
+        //respond todoList, [model: [todoList : todoList]]
+        //render(todoList as JSON)
+        //todoList
+        //[todo: singleTodo]
+        //[todoList: todoList] // tries to render a view with the same name as a method
+        respond Todo.list()
     }
 
 }

@@ -8,9 +8,9 @@
 
         <div>
             <hr/>
-            <div class="property-list" ng-controller="singlePageController" ng-cloak>
+            <div class="property-list" ng-controller="todoRestController" ng-cloak>
 
-                <h1>Mick's SPA Restangular Pulling ALL Todo from AngularJs {{name}}</h1>
+                <h1>Mick's SPA spaHome1.gsp Pulling ALL Todo from AngularJs {{name}}</h1>
                 <h2>Found {{allTodos.length}} todos</h2>
                 <button type="button" class="btn btn-xs btn-primary">Primary</button>
                 <button type="button" class="btn btn-xs btn-success">Success</button>
