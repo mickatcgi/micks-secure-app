@@ -34,18 +34,18 @@ angular.module('micks-todos', ['restangular'])
             )
         }
 
-        $scope.show = function() {
+        $scope.show = function(todoId) {
 
             $log.info("Restangular.one() invoking show() REST call...")
 
-            Restangular.one('/', 8).get().then(
+            Restangular.one('/getOneTodo', todoId).get().then(
                 function(result) {
                     // Plain() method strips off extra restangular fluff from responses
                     $scope.oneTodo['myTodo'] = angular.toJson(result.plain())
                     $log.info("Restangular.one() show() returned -> " + angular.toJson($scope.oneTodo))
                 },
                 function(error) {
-                    $log.error("Error in Restangular.one() calll -> " + error.data.errorMessage)
+                    $log.error("Error in Restangular.one() call -> " + error.data.errorMessage)
                 }
             )
             return

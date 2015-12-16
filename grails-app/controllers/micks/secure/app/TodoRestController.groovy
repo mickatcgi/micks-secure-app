@@ -2,6 +2,7 @@ package micks.secure.app
 
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
+import grails.web.RequestParameter
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER', 'ROLE_ANONYMOUS'])
 class TodoRestController extends RestfulController {
@@ -33,6 +34,10 @@ class TodoRestController extends RestfulController {
         log.info("In TodoRestController spaHome1() servicing spaHome1.gsp")
     }
 
+    def spaShow() {
+        log.info("In TodoRestController spaShow() servicing spaShow.gsp")
+    }
+
     def getAllTodos() {
         List<Todo> todoList = Todo.list()
         Todo singleTodo = Todo.findById(1)
@@ -44,5 +49,12 @@ class TodoRestController extends RestfulController {
         //[todoList: todoList] // tries to render a view with the same name as a method
         respond Todo.list()
     }
+
+    def getOneTodo(@RequestParameter('id') int todoId) {
+        log.info("In TodoRestController getOneTodo() rendering todo = ${todoId}")
+        Todo todo = Todo.findById(todoId)
+        respond todo
+    }
+
 
 }

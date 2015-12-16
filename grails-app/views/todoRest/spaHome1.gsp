@@ -33,7 +33,10 @@
                     </thead>
                     <tr ng-repeat="myTodo in allTodos">
                         <td>{{myTodo.id}}</td>
-                        <td>{{myTodo.description}}</td>
+                        <td><a href<g:link controller="todoRest" action="spaShow">
+                                {{myTodo.description}}
+                            </g:link>
+                        </td>
                         <td>{{myTodo.notes}}</td>
                         <td>{{myTodo.priority}}</td>
                         <td>{{myTodo.folder}}</td>
