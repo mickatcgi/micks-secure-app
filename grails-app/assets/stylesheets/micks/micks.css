@@ -1,16 +1,18 @@
 
 .micks_align {
-    margin:0px 40px;
+    margin:10px 40px;
 }
 
 .micks_label {
-    font-size: 1.1em;
+    font-size: 2.1em;
     color: gray;
     font-style: italic;
+    width: 130px;
+    text-align: left;
 }
 
 .micks_todo {
-    font-size: 1.1em;
+    font-size: 2.1em;
     color: navy;
     font-style: italic;
 }

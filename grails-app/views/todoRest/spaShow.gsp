@@ -7,8 +7,9 @@
     <body>
 
         <div class="property-list" ng-controller="todoController" ng-cloak>
-        <hr/>
+            <hr/>
             <h1>Mick's SPA displaying single page Todo</h1>
+
             <div class="micks_align">
                 <label class="micks_label" for="id">Id:</label>
                 <span class="micks_todo">{{oneTodo.id}} (from {{name}})</span>
@@ -25,6 +26,12 @@
                 <label class="micks_label" for="username">User:</label>
                 <span class="micks_todo">{{oneTodo.user}}</span>
             </div>
+        </div>
+
+        <div class="micks_align">
+            <g:link controller="todoRest" action="spaHome1">
+                Back
+            </g:link>
         </div>
 
     </body>
