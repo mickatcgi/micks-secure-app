@@ -33,7 +33,7 @@
                     </thead>
                     <tr ng-repeat="myTodo in allTodos">
                         <td>{{myTodo.id}}</td>
-                        <td><a href<g:link controller="todoRest" action="spaShow">
+                        <td><a href<g:link controller="todoRest" action="spaShow" id="{{myTodo.id}}">
                                 {{myTodo.description}}
                             </g:link>
                         </td>

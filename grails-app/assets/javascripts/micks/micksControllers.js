@@ -33,4 +33,34 @@ angular.module('micks-todos', ['restangular'])
 
         $scope.loadAllTodos()
 
+}])
+.controller("todoController",
+    ["$scope", "Restangular", "$log",
+
+    function ($scope, Restangular, $log) {
+
+        $scope.name = "todoController"
+        $log.info("Loading controller --> " + $scope.name)
+
+        $scope.oneTodo = null
+
+        $scope.show = function(todoId) {
+
+            $log.info("Restangular.one() invoking show() REST call...")
+
+            Restangular.one('/getOneTodo', todoId).get().then(
+                function(result) {
+                    // Plain() method strips off extra restangular fluff from responses
+                    $scope.oneTodo = result
+                    $log.info("Restangular.one() show() returned -> " + angular.toJson($scope.oneTodo))
+                },
+                function(error) {
+                    $log.error("Error in Restangular.one() call -> " + error.data.errorMessage)
+                }
+            )
+            return
+        }
+
+        $scope.show(4)
+
 }]);

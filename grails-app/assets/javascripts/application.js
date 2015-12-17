@@ -12,8 +12,7 @@
 //= require micks/lodash.js
 //= require micks/restangular.js
 //= require micks/singlePageController.js
-//= require micks/todoRestController.js
-//= require micks/todoController.js
+//= require micks/micksControllers.js
 //= require_tree .
 //= require_self
 

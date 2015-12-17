@@ -35,7 +35,7 @@ class TodoRestController extends RestfulController {
     }
 
     def spaShow() {
-        log.info("In TodoRestController spaShow() servicing spaShow.gsp")
+        log.info("In TodoRestController spaShow(id = ${params.id}) servicing spaShow.gsp")
     }
 
     def getAllTodos() {
@@ -51,7 +51,7 @@ class TodoRestController extends RestfulController {
     }
 
     def getOneTodo(@RequestParameter('id') int todoId) {
-        log.info("In TodoRestController getOneTodo() rendering todo = ${todoId}")
+        log.info("In TodoRestController getOneTodo(id = ${todoId}) rendering todo")
         Todo todo = Todo.findById(todoId)
         respond todo
     }
