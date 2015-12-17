@@ -6,12 +6,12 @@
     </head>
     <body>
 
-        <div class="property-list" ng-controller="todoRestController" ng-cloak>
+        <div class="property-list" ng-controller="todoController" ng-cloak>
         <hr/>
             <h1>Mick's SPA displaying single page Todo</h1>
             <div class="micks_align">
                 <label class="micks_label" for="id">Id:</label>
-                <span class="micks_todo">${oneTodo.myTodo.id} (from controller singlePage action)</span>
+                <span class="micks_todo">${oneTodo.myTodo.id} (from controller spaShow action)</span>
             </div>
             <div class="micks_align">
                 <label class="micks_label" for="description">Description:</label>

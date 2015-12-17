@@ -3,36 +3,15 @@ angular.module('micks-todos', ['restangular'])
     function(RestangularProvider) {
         RestangularProvider.setBaseUrl('/todoRest');
 }])
-.controller("todoRestController",
+.controller("todoController",
     ["$scope", "Restangular", "$log",
 
     function ($scope, Restangular, $log) {
 
-        $scope.name = "todoRestController"
+        $scope.name = "todoController"
         $log.info("Loading controller --> " + $scope.name)
 
-        $scope.allTodos = []
         $scope.oneTodo = {}
-        $scope.randomInt = -1
-        $scope.randomTodo = {}
-        $scope.count = -1
-
-        $scope.loadAllTodos = function () {
-
-            /*
-            * Invoke the /api/todes index() method and return all todos by default
-            */
-            Restangular.all('/getAllTodos').getList().then(
-                function(result) {
-                    $scope.allTodos = result
-                    $log.debug("Name = " + $scope.name + " AllTodos length = "
-                        + $scope.allTodos.length)
-                },
-                function(error) {
-                    $log.error("Error in Restangular.all() call -> " + error.data.errorMessage)
-                }
-            )
-        }
 
         $scope.show = function(todoId) {
 
@@ -50,7 +29,5 @@ angular.module('micks-todos', ['restangular'])
             )
             return
         }
-
-        $scope.loadAllTodos()
 
 }]);
