@@ -8,16 +8,16 @@ angular.module('micks-todos', ['restangular', 'ngRoute'])
 /* Don't leave in the 'otherwise' because it defaults there for every other page     */
 /*   even if it's not an angular page.                                               */
 /*************************************************************************************/
-.config(function ($routeProvider) {
+.config(['$routeProvider', '$locationProvider',
+
+    function($routeProvider, $locationProvider) {
 
         $routeProvider.when("/spaHome1", {
-            templateUrl: "/assets/micks/partials/spaHome1.html",
-            controller: 'todoListController'
+            templateUrl: "/assets/micks/partials/spaHome1.html"
         });
 
-        $routeProvider.when("/spaShow/:id", {
-            templateUrl: "/assets/micks/partials/spaShow.html",
-            controller: 'todoController'
+        $routeProvider.when('/spaShow/:id', {
+            templateUrl: "/assets/micks/partials/spaShow.html"
         });
 
         $routeProvider.otherwise({
@@ -25,7 +25,10 @@ angular.module('micks-todos', ['restangular', 'ngRoute'])
             templateUrl: "/assets/micks/partials/spaBad.html"
         });
 
-})
+        // configure html5 to get links working on plnkr
+        //$locationProvider.html5Mode(true);
+
+}])
 .controller("todoListController",
     ["$scope", "Restangular", "$log", '$location', '$routeParams', '$route',
 
@@ -57,8 +60,8 @@ angular.module('micks-todos', ['restangular', 'ngRoute'])
             $log.info("TodoList about to show todo = " + todo.id);
             var current_path = $location.path();
             var new_path = "/spaShow/" + todo.id;
-            $location.path(new_path);
             $log.info("TodoList about to navigate to url = " + new_path)
+            $location.path(new_path);
         };
 
         $scope.loadAllTodos()
@@ -67,7 +70,7 @@ angular.module('micks-todos', ['restangular', 'ngRoute'])
 .controller("todoController",
     ["$scope", "Restangular", "$log", '$location','$routeParams', '$route',
 
-    function ($scope, Restangular, $log, $routeParams, $route) {
+    function ($scope, Restangular, $log, $location, $routeParams, $route) {
 
         $scope.name = "todoController"
         $log.info("Loading controller --> " + $scope.name)
@@ -77,7 +80,9 @@ angular.module('micks-todos', ['restangular', 'ngRoute'])
         /*************************************************************************************/
         $scope.show = function() {
 
-            var todoId = $routeParams["id"];
+            $log.info("TodoController.show() $routeParams = " + JSON.stringify($routeParams));
+
+            var todoId = $routeParams.id
             $log.info("Restangular.one() invoking show() REST call for todoId = " + todoId)
 
             Restangular.one('/getOneTodo', todoId).get().then(
