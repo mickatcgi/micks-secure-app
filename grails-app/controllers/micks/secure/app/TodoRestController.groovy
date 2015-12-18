@@ -30,18 +30,18 @@ class TodoRestController extends RestfulController {
         super(Todo)
     }
 
-    def spaHome1() {
-        log.info("In TodoRestController spaHome1() servicing spaHome1.gsp")
-    }
-
-    def spaShow() {
-        log.info("In TodoRestController spaShow(id = ${params.id}) servicing spaShow.gsp")
-    }
+//    def spaHome1() {
+//        log.info("In TodoRestController spaHome1() servicing spaHome1.html")
+//    }
+//
+//    def spaShow() {
+//        log.info("In TodoRestController spaShow(id = ${params.id}) servicing spaShow.html")
+//    }
 
     def getAllTodos() {
         List<Todo> todoList = Todo.list()
         Todo singleTodo = Todo.findById(1)
-        log.info("In TodoRestController spaHome() servicing spaHome2.gsp with ${todoList.size()} todos")
+        log.info("In TodoRestController spaHome() servicing spaHome1 with ${todoList.size()} todos")
         //respond todoList, [model: [todoList : todoList]]
         //render(todoList as JSON)
         //todoList

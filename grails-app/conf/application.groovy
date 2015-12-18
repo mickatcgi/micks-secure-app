@@ -6,10 +6,10 @@ grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'micks.secure.a
 grails.plugin.springsecurity.authority.className = 'micks.secure.app.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
+	[pattern: '/spaHome1',              access: ['permitAll']],
+	[pattern: '/spaShow',               access: ['permitAll']],
 	[pattern: '/error',          access: ['permitAll']],
 	[pattern: '/index',          access: ['permitAll']],
-	[pattern: '/spaHome1.gsp',      access: ['permitAll']],
-	[pattern: '/spaHome2.gsp',      access: ['permitAll']],
 	[pattern: '/shutdown',       access: ['permitAll']],
 	[pattern: '/assets/**',      access: ['permitAll']],
 	[pattern: '/**/js/**',       access: ['permitAll']],

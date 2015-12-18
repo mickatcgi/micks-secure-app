@@ -1,11 +1,3 @@
-<html>
-    <head>
-        <title>SPA for Billybob</title>
-        <meta name="layout" content="main"/>
-        <r:require module="core"/>
-    </head>
-    <body>
-
         <div class="property-list" ng-controller="todoController" ng-cloak>
             <hr/>
             <h1>Mick's SPA displaying single page Todo</h1>
@@ -29,10 +21,5 @@
         </div>
 
         <div class="micks_align">
-            <g:link controller="todoRest" action="spaHome1">
-                Back
-            </g:link>
+            <a ng-click="back()">Back</a>
         </div>
-
-    </body>
-</html>

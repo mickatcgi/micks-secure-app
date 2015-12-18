@@ -1,16 +1,8 @@
-<html>
-    <head>
-        <title>SPA for Billybob</title>
-        <meta name="layout" content="main"/>
-        <r:require module="core"/>
-    </head>
-    <body>
-
         <div>
             <hr/>
             <div class="property-list" ng-controller="todoListController" ng-cloak>
 
-                <h1>Mick's SPA spaHome1.gsp Pulling ALL Todo from AngularJs {{name}}</h1>
+                <h1>Mick's SPA spaHome1 Partial Pulling ALL Todo from AngularJs {{name}}</h1>
                 <h2>Found {{allTodos.length}} todos</h2>
                 <button type="button" class="btn btn-xs btn-primary">Primary</button>
                 <button type="button" class="btn btn-xs btn-success">Success</button>
@@ -33,11 +25,7 @@
                     </thead>
                     <tr ng-repeat="myTodo in allTodos">
                         <td>{{myTodo.id}}</td>
-                        <td>
-                            <g:link controller="todoRest" action="spaShow" id="{{myTodo.id}}">
-                                {{myTodo.description}}
-                            </g:link>
-                        </td>
+                        <td><a href="" ng-click="show(myTodo)">{{myTodo.description}}</a></td>
                         <td>{{myTodo.notes}}</td>
                         <td>{{myTodo.priority}}</td>
                         <td>{{myTodo.folder}}</td>
@@ -50,6 +38,3 @@
                 <hr/>
             </div>
         </div>
-
-    </body>
-</html>

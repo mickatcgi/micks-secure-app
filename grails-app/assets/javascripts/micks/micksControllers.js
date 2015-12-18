@@ -1,12 +1,35 @@
-angular.module('micks-todos', ['restangular'])
+angular.module('micks-todos', ['restangular', 'ngRoute'])
 .config(["RestangularProvider",
     function(RestangularProvider) {
         RestangularProvider.setBaseUrl('/todoRest');
 }])
-.controller("todoListController",
-    ["$scope", "Restangular", "$log",
+/*************************************************************************************/
+/* Routes switch between views at the ng-view definition                             */
+/* Don't leave in the 'otherwise' because it defaults there for every other page     */
+/*   even if it's not an angular page.                                               */
+/*************************************************************************************/
+.config(function ($routeProvider) {
 
-    function ($scope, Restangular, $log) {
+        $routeProvider.when("/spaHome1", {
+            templateUrl: "/assets/micks/partials/spaHome1.html",
+            controller: 'todoListController'
+        });
+
+        $routeProvider.when("/spaShow/:id", {
+            templateUrl: "/assets/micks/partials/spaShow.html",
+            controller: 'todoController'
+        });
+
+        $routeProvider.otherwise({
+            // If using redirectTo: then you must use a route, not a fragment
+            templateUrl: "/assets/micks/partials/spaBad.html"
+        });
+
+})
+.controller("todoListController",
+    ["$scope", "Restangular", "$log", '$location', '$routeParams', '$route',
+
+    function ($scope, Restangular, $log, $location, $routeParams, $route) {
 
         $scope.name = "todoListController"
         $log.info("Loading controller --> " + $scope.name)
@@ -14,15 +37,13 @@ angular.module('micks-todos', ['restangular'])
         $scope.allTodos = []
         $scope.count = -1
 
+        /*************************************************************************************/
         $scope.loadAllTodos = function () {
 
-            /*
-            * Invoke the /api/todes index() method and return all todos by default
-            */
             Restangular.all('/getAllTodos').getList().then(
                 function(result) {
                     $scope.allTodos = result
-                    $log.debug("Name = " + $scope.name + " AllTodos length = "
+                    $log.info("Name = " + $scope.name + " AllTodos length = "
                         + $scope.allTodos.length)
                 },
                 function(error) {
@@ -31,22 +52,33 @@ angular.module('micks-todos', ['restangular'])
             )
         }
 
+        /*************************************************************************************/
+        $scope.show = function (todo) {
+            $log.info("TodoList about to show todo = " + todo.id);
+            var current_path = $location.path();
+            var new_path = "/spaShow/" + todo.id;
+            $location.path(new_path);
+            $log.info("TodoList about to navigate to url = " + new_path)
+        };
+
         $scope.loadAllTodos()
 
 }])
 .controller("todoController",
-    ["$scope", "Restangular", "$log",
+    ["$scope", "Restangular", "$log", '$location','$routeParams', '$route',
 
-    function ($scope, Restangular, $log) {
+    function ($scope, Restangular, $log, $routeParams, $route) {
 
         $scope.name = "todoController"
         $log.info("Loading controller --> " + $scope.name)
 
         $scope.oneTodo = null
 
-        $scope.show = function(todoId) {
+        /*************************************************************************************/
+        $scope.show = function() {
 
-            $log.info("Restangular.one() invoking show() REST call...")
+            var todoId = $routeParams["id"];
+            $log.info("Restangular.one() invoking show() REST call for todoId = " + todoId)
 
             Restangular.one('/getOneTodo', todoId).get().then(
                 function(result) {
@@ -61,6 +93,14 @@ angular.module('micks-todos', ['restangular'])
             return
         }
 
-        $scope.show(4)
+        /*************************************************************************************/
+        $scope.back = function () {
+            $log.info("Returning BACK to todo list");
+            var current_path = $location.path();
+            var new_path = "/spaHome1";
+            $location.path(new_path);
+        };
+
+        $scope.show()
 
 }]);
